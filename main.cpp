@@ -1,12 +1,28 @@
-#include <stdio.h>
+ï»¿#include <stdio.h>
+
+template <typename Type>
+Type Min(Type a, Type b)
+{
+	return a < b ? a : b;
+}
+
+char* Min(char a,char b)
+{
+	static char string[] = "æ•°å­—ä»¥å¤–ã¯ä»£å…¥ã§ãã¾ã›ã‚“";
+	printf("%s\n",string);
+	return string;
+}
 
 int main() {
-	int end_flg = 0;
 
-
-
-	printf("\nƒRƒ“ƒ\[ƒ‹ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ðI—¹‚·‚éê‡‚Í”Žš‚Ì1‚ð“ü—Í‚µEnterƒL[‚ð‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢");
-	scanf_s("%d",&end_flg);
-	if (end_flg == 1)return 0;
-	else return -1;
+	int int1 = 2, int2 = 5;
+	float float1 = 1.0f, float2 = -1.2f;
+	double double1 = 0.5, double2 = 2.8;
+	char char1 = 'a', char2 = 'b';
+	printf("%d\n", Min(int1, int2));
+	printf("%f\n", Min(float1, float2));
+	printf("%lf\n", Min(double1, double2));
+	//printf("%s\n", Min(char1, char2));
+	Min(char1, char2);
+	return 0;
 }
