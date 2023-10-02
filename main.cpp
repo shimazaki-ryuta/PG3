@@ -9,7 +9,7 @@ Type Min(Type a, Type b)
 char* Min(char a,char b)
 {
 	static char string[] = "数字以外は代入できません";
-	printf("%s\n",string);
+	//printf("%s\n",string);
 	return string;
 }
 
@@ -22,7 +22,7 @@ int main() {
 	printf("%d\n", Min(int1, int2));
 	printf("%f\n", Min(float1, float2));
 	printf("%lf\n", Min(double1, double2));
-	//printf("%s\n", Min(char1, char2));
-	Min(char1, char2);
+	printf("%s\n", Min(char1, char2));
+	//Min(char1, char2);
 	return 0;
 }
