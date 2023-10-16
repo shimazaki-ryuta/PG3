@@ -4,35 +4,49 @@
 #include <Windows.h>
 #include <functional>
 
-
-void TimedCall(std::function <void(int)> func, int& input, int second)
+class Enemy
 {
-	for (second; second >0; second--)
+public:
+	enum class Phase
 	{
-		printf("*\n");
-		Sleep(1000);
-	}
-	func(input);
-}
-
-int main() {
-	int input = 0;
-	srand(time(NULL));
-	
-	std::function<void(int)> func = [](int input){
-		int answer = rand() % 6 + 1;
-		printf("%d", answer);
-		if (answer % 2 == (input))
-		{
-			printf(" 結果 : はずれ\n");
-			return;
-		}
-		printf(" 結果 : 当たり\n");
-		return;
+		Approach,
+		Shot,
+		Leave,
+	};
+	void Update() {
+		(this->*phaseTable[static_cast<size_t>(phase_)])();
+	};
+	void Approach() {
+		printf("近接\n");
+		phase_ = Phase::Shot;
+	};
+	void Shot() {
+		printf("射撃\n");
+		phase_ = Phase::Leave;
+	};
+	void Leave() {
+		printf("離脱\n");
+		//phase_ = Phase::Approach;
 	};
 
-	printf("半...0 丁...1 ");
-	scanf_s("%d",&input);
-	TimedCall(func,input,3);
+private:
+	Phase phase_ = Phase::Approach;
+	static void(Enemy::* phaseTable[])();
+};
+
+void(Enemy::* Enemy::phaseTable[])() = {
+	&Enemy::Approach,
+	&Enemy::Shot,
+	&Enemy::Leave
+};
+
+int main() {
+	Enemy enemy;
+	while (1)
+	{
+		enemy.Update();
+
+		Sleep(1000);
+	}
 	return 0;
 }
