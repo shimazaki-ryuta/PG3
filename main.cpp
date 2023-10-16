@@ -1,26 +1,41 @@
 ﻿#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <Windows.h>
 
-int calc(int hour,int money)
+
+void ReturnAnswer(int &in)
 {
-	money = money * 2 - 50;
-	if (hour <= 1)
+	int answer = rand() % 6 + 1;
+	printf("%d",answer);
+	if (answer % 2 && !(in))
 	{
-		return money;
+		printf(" 結果 : 当たり\n");
+		return;
 	}
-	return money + calc(hour-1,money);
+	printf(" 結果 : はずれ\n");
+	return;
+}
+
+void TimedCall(void (* pFunc)(int &in),int &input, int second)
+{
+	for (second; second >0; second--)
+	{
+		printf("*\n");
+		Sleep(1000);
+	}
+	pFunc(input);
 }
 
 int main() {
+	int input = 0;
+	srand(time(NULL));
+	
+	void (*pFunc)(int&);
+	pFunc = ReturnAnswer;
 
-	int hour = 1;
-	int money = 100;
-	do
-	{
-		hour++;
-		money =(100 +  calc(hour-1, 100))/hour;
-		printf("%d時間 ,平均: %d円\n",hour,money);
-	} while (1072 > money);
-	printf("%d時間働くと再帰的な資金体系のほうが儲かる\n",hour);
-
+	printf("半...0 丁...1 ");
+	scanf_s("%d",&input);
+	TimedCall(pFunc,input,3);
 	return 0;
 }
