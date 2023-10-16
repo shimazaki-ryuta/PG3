@@ -8,12 +8,12 @@ void ReturnAnswer(int &in)
 {
 	int answer = rand() % 6 + 1;
 	printf("%d",answer);
-	if (answer % 2 && !(in))
+	if (answer % 2 == (in))
 	{
-		printf(" 結果 : 当たり\n");
+		printf(" 結果 : はずれ\n");
 		return;
 	}
-	printf(" 結果 : はずれ\n");
+	printf(" 結果 : 当たり\n");
 	return;
 }
 
