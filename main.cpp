@@ -1,43 +1,62 @@
 ﻿#include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-#include <Windows.h>
-#include <functional>
-
-class IInstrument
+#define _USE_MATH_DEFINES
+#include <math.h>
+class IShape
 {
 public:
 	
-	virtual void Play()=0;
+	virtual void Size()=0;
+	virtual void Draw() = 0;
 };
 
-class Guiter : public IInstrument
+class Circle : public IShape
 {
 public:
-	void Play() override {
-		printf("ギターを演奏した。\n");
+	Circle(float radius) {
+		radius_ = radius;
+	}
+	void Size() override {
+		size_ = float(M_PI) * radius_ * radius_;
 	};
+	void Draw() override {
+		printf("%f\n",size_);
+	};
+private:
+	float size_;
+	float radius_;
 };
 
-class Drums : public IInstrument
+class Rectangle : public IShape
 {
 public:
-	void Play() {
-		printf("ドラムを演奏した。\n");
+	Rectangle(float width,float height) {
+		width_ = width;
+		height_ = height;
 	};
+	void Size() override {
+		size_ = width_ * height_;
+	};
+	void Draw() override {
+		printf("%f\n", size_);
+	}; 
+private:
+	float size_;
+	float width_;
+	float height_;
 };
 
 int main() {
-	IInstrument* instruments[2];
-	instruments[0] = new Guiter;
-	instruments[1] = new Drums;
-
-	for (IInstrument* instrument : instruments) {
-		instrument->Play();
+	IShape* shapes[2];
+	shapes[0] = new Circle(2.0f);
+	shapes[1] = new Rectangle(1.0f,1.0f);
+	for (IShape* shape : shapes) {
+		shape->Size();
+		shape->Draw();
 	}
 	
-	for (IInstrument* instrument : instruments) {
-		delete instrument;
+	for (IShape* shape : shapes) {
+		delete shape;
 	}
 
 	return 0;
