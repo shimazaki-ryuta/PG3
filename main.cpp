@@ -5,7 +5,7 @@
 #include <functional>
 
 
-void TimedCall(std::function <void(int)> func, int& input, int second)
+void SetTimeOut(std::function <void(int)> func, int second, int& input)
 {
 	for (second; second >0; second--)
 	{
@@ -33,6 +33,6 @@ int main() {
 
 	printf("半...0 丁...1 ");
 	scanf_s("%d",&input);
-	TimedCall(func,input,3);
+	SetTimeOut(func,3, input);
 	return 0;
 }
