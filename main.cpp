@@ -17,7 +17,7 @@ void ReturnAnswer(int &in)
 	return;
 }
 
-void TimedCall(void (* pFunc)(int &in),int &input, int second)
+void SetTimeOut(void (* pFunc)(int &in), int second,int input)
 {
 	for (second; second >0; second--)
 	{
@@ -33,9 +33,8 @@ int main() {
 	
 	void (*pFunc)(int&);
 	pFunc = ReturnAnswer;
-
 	printf("半...0 丁...1 ");
 	scanf_s("%d",&input);
-	TimedCall(pFunc,input,3);
+	SetTimeOut(pFunc, 3,input);
 	return 0;
 }
