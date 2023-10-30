@@ -1,38 +1,52 @@
-﻿#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <Windows.h>
-#include <functional>
+#include <Novice.h>
 
+const char kWindowTitle[] = "LE2A_11";
 
-void SetTimeOut(std::function <void(int)> func, int second, int& input)
-{
-	for (second; second >0; second--)
-	{
-		printf("*\n");
-		Sleep(1000);
-	}
-	func(input);
-}
+// Windowsアプリでのエントリーポイント(main関数)
+int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
-int main() {
-	int input = 0;
-	srand(time(NULL));
-	
-	std::function<void(int)> func = [](int input){
-		int answer = rand() % 6 + 1;
-		printf("%d", answer);
-		if (answer % 2 == (input))
-		{
-			printf(" 結果 : はずれ\n");
-			return;
+	// ライブラリの初期化
+	Novice::Initialize(kWindowTitle, 1280, 720);
+
+	// キー入力結果を受け取る箱
+	char keys[256] = {0};
+	char preKeys[256] = {0};
+
+	// ウィンドウの×ボタンが押されるまでループ
+	while (Novice::ProcessMessage() == 0) {
+		// フレームの開始
+		Novice::BeginFrame();
+
+		// キー入力を受け取る
+		memcpy(preKeys, keys, 256);
+		Novice::GetHitKeyStateAll(keys);
+
+		///
+		/// ↓更新処理ここから
+		///
+
+		///
+		/// ↑更新処理ここまで
+		///
+
+		///
+		/// ↓描画処理ここから
+		///
+
+		///
+		/// ↑描画処理ここまで
+		///
+
+		// フレームの終了
+		Novice::EndFrame();
+
+		// ESCキーが押されたらループを抜ける
+		if (preKeys[DIK_ESCAPE] == 0 && keys[DIK_ESCAPE] != 0) {
+			break;
 		}
-		printf(" 結果 : 当たり\n");
-		return;
-	};
+	}
 
-	printf("半...0 丁...1 ");
-	scanf_s("%d",&input);
-	SetTimeOut(func,3, input);
+	// ライブラリの終了
+	Novice::Finalize();
 	return 0;
 }
