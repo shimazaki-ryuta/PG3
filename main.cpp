@@ -5,21 +5,22 @@
 #include <functional>
 
 
-void SetTimeOut(std::function <void(int)> func, int second, int& input)
+void SetTimeOut(std::function <void()> func, int second)
 {
 	for (second; second >0; second--)
 	{
 		printf("*\n");
 		Sleep(1000);
 	}
-	func(input);
+	func();
 }
 
 int main() {
 	int input = 0;
 	srand(time(NULL));
-	
-	std::function<void(int)> func = [](int input){
+	printf("半...0 丁...1 ");
+	scanf_s("%d", &input);
+	std::function<void()> func = [=](){
 		int answer = rand() % 6 + 1;
 		printf("%d", answer);
 		if (answer % 2 == (input))
@@ -30,9 +31,6 @@ int main() {
 		printf(" 結果 : 当たり\n");
 		return;
 	};
-
-	printf("半...0 丁...1 ");
-	scanf_s("%d",&input);
-	SetTimeOut(func,3, input);
+	SetTimeOut(func,3);
 	return 0;
 }
