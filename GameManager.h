@@ -4,11 +4,11 @@
 #include "IScene.h"
 #include "TitleScene.h"
 #include <thread>
-class SceneManager
+class GameManager
 {
 public:
-	SceneManager();
-	~SceneManager();
+	GameManager();
+	~GameManager();
 	int Run();
 	void LoadNextScene();
 private:
@@ -20,5 +20,6 @@ private:
 	std::unique_ptr<IScene> sceneTable[3];
 	std::thread loadNextScene;
 	bool isLoadEnd_ = false;
+	bool isLoad_ = false;
 };
 

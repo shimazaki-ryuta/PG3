@@ -1,13 +1,13 @@
-#include "SceneManager.h"
+#include "GameManager.h"
 #include "InputManager.h"
 #include "Novice.h"
 #include "TitleScene.h"
 #include "StageScene.h"
 #include "ClearScene.h"
 #include <functional>
-//SceneManager::sceneTable;
+//GameManager::sceneTable;
 
-SceneManager::SceneManager(){
+GameManager::GameManager(){
 	sceneTable[0] = std::make_unique<TitleScene>();
 	sceneTable[1] = std::make_unique<StageScene>();
 	sceneTable[2] = std::make_unique<ClearScene>();
@@ -18,11 +18,11 @@ SceneManager::SceneManager(){
 	nextSceneNo_ = currentSceneNo_;
 }
 
-SceneManager::~SceneManager() {
+GameManager::~GameManager() {
 
 }
 
-int SceneManager::Run() {
+int GameManager::Run() {
 	while (Novice::ProcessMessage()==0) {
 		// フレームの開始
 		Novice::BeginFrame();
@@ -30,7 +30,7 @@ int SceneManager::Run() {
 		if (nextSceneNo_ != sceneTable[currentSceneNo_]->GetSceneNo()) {
 			nextSceneNo_ = sceneTable[currentSceneNo_]->GetSceneNo();
 			isLoadEnd_ = false;
-			loadNextScene = std::thread(std::bind(&SceneManager::LoadNextScene,this));
+			loadNextScene = std::thread(std::bind(&GameManager::LoadNextScene,this));
 		}
 		if (nextSceneNo_ != currentSceneNo_) {
 			if (isLoadEnd_) {
@@ -43,22 +43,30 @@ int SceneManager::Run() {
 		sceneTable[currentSceneNo_]->Update();
 		sceneTable[currentSceneNo_]->Draw();
 	
+		if (isLoad_) {
+			Novice::ScreenPrintf(640,300,"NowLoading...");
+		}
+
 		// フレームの終了
 		Novice::EndFrame();
 
 		// ESCキーが押されたらループを抜ける
 		if (InputManager::TriggerKey(DIK_ESCAPE)) {
-			loadNextScene.join();
 			break;
 		}
+	}
+	if (isLoad_) {
+		loadNextScene.join();
 	}
 	return 0;
 }
 
-void SceneManager::LoadNextScene() {
+void GameManager::LoadNextScene() {
 	isLoadEnd_ = false;
+	isLoad_ = true;
 	sceneTable[nextSceneNo_]->Initialize();
 	//初期化処理の時間(擬似)
-	Sleep(2000);
+	Sleep(3000);
 	isLoadEnd_ = true;
+	isLoad_ = false;
 }

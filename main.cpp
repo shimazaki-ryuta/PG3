@@ -1,5 +1,5 @@
 #include <Novice.h>
-#include "SceneManager.h"
+#include "GameManager.h"
 const char kWindowTitle[] = "LE2A_11";
 
 // Windowsアプリでのエントリーポイント(main関数)
@@ -7,9 +7,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// ライブラリの初期化
 	Novice::Initialize(kWindowTitle, 1280, 720);
-	SceneManager* sceneManager = new SceneManager;
-	sceneManager->Run();
-	delete sceneManager;
+	GameManager* gameManager = new GameManager;
+	gameManager->Run();
+	delete gameManager;
 	// ライブラリの終了
 	Novice::Finalize();
 	return 0;
