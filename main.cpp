@@ -20,7 +20,7 @@ int main() {
 	srand(time(NULL));
 	printf("半...0 丁...1 ");
 	scanf_s("%d", &input);
-	std::function<void()> func = [=](){
+	std::function<void()> diceRoll = [=](){
 		int answer = rand() % 6 + 1;
 		printf("%d", answer);
 		if (answer % 2 == (input))
@@ -31,6 +31,6 @@ int main() {
 		printf(" 結果 : 当たり\n");
 		return;
 	};
-	SetTimeOut(func,3);
+	SetTimeOut(diceRoll,3);
 	return 0;
 }
