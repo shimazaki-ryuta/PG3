@@ -23,7 +23,7 @@ int main() {
 	}
 	yamanoteLineIterator = std::find(yamanoteLine.begin(), yamanoteLine.end(), "Tamachi");
 	if (yamanoteLineIterator != yamanoteLine.end()) {
-		yamanoteLine.insert(yamanoteLineIterator, "TakanawaGateWay");
+		yamanoteLine.insert(yamanoteLineIterator, "Takanawa GateWay");
 	}
 	printf("\n2022\n");
 	num = 0;
