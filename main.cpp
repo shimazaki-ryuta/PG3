@@ -1,18 +1,21 @@
 #include <stdio.h>
-#include <thread>
+#include <string>
+#include <chrono>
 
-void PrintThreadNum(int num) {
-	printf("thread %d\n",num);
-}
+using namespace std::chrono;
 
 int main() {
-	int num = 0;
-	std::thread thread1(PrintThreadNum, ++num);
-	thread1.join();
-	std::thread thread2(PrintThreadNum, ++num);
-	thread2.join();
-	std::thread thread3(PrintThreadNum, ++num);
-
-	thread3.join();
+	std::string str(100000,'a');
+	std::string cpy,move;
+	steady_clock::time_point start = steady_clock::now();
+	cpy = str;
+	steady_clock::time_point end = steady_clock::now();
+	microseconds time = duration_cast<microseconds>(end - start);
+	printf("copy : %d\n",int(time.count()));
+	start = steady_clock::now();
+	move = std::move(str);
+	end = steady_clock::now();
+	time = duration_cast<microseconds>(end - start);
+	printf("move : %d\n", int(time.count()));
 	return 0;
 }
